@@ -9,6 +9,9 @@ public class ConnectFour {
 		frame.setSize(700, 600);
 		frame.setLocation(200, 1200);
 		
+		ConnectFourPanel panel = new ConnectFourPanel();
+		frame.add(panel);
+		
 		frame.setVisible(true);
 	}
 
