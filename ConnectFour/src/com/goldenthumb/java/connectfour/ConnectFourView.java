@@ -4,13 +4,16 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JPanel;
 
-public class ConnectFourView extends JPanel {
+public class ConnectFourView extends JPanel implements MouseListener {
 
 	private static final long serialVersionUID = 2064075504759682385L;
 	
@@ -20,6 +23,12 @@ public class ConnectFourView extends JPanel {
 	private int originY = 70;
 	private int cellSize = 80;
 	private int diameter = 50;
+	
+	ConnectFourView() {
+		super();
+		
+		addMouseListener(this);
+	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -60,4 +69,25 @@ public class ConnectFourView extends JPanel {
 		g2.setColor(isRed ? Color.RED : Color.YELLOW);
 		g2.fillOval(originX + col * cellSize, originY + (5 - row) * cellSize, diameter, diameter);
 	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		Point mouseTip = e.getPoint();
+		System.out.println(mouseTip);
+		
+		int col = (mouseTip.x - originX) / cellSize;
+		System.out.println("col = " + col);
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
 }
