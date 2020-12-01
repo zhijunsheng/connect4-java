@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -16,6 +17,8 @@ import javax.swing.JPanel;
 public class ConnectFourView extends JPanel implements MouseListener {
 
 	private static final long serialVersionUID = 2064075504759682385L;
+	
+	ConnectFourDelegate delegate = null;
 	
 	Set<ConnectFourPiece> shadowPiecesBox = new HashSet<ConnectFourPiece>();
 	
@@ -41,16 +44,26 @@ public class ConnectFourView extends JPanel implements MouseListener {
 	}
 	
 	private void drawPieces(Graphics2D g2) {
+		for (int row = 0; row < 6; row++) {
+			for (int col = 0; col < 7; col++) {
+				ConnectFourPiece piece = delegate.pieceAt(col, 5 - row);
+				if (piece != null) {
+					drawPiece(g2, piece.col, piece.row, piece.player == Player.RED);
+				}
+			}
+		}
+		
+		
 		// tmp code
 		
-		shadowPiecesBox.add(new ConnectFourPiece(6, 0, Player.RED));
-		shadowPiecesBox.add(new ConnectFourPiece(6, 1, Player.YELLOW));
-		shadowPiecesBox.add(new ConnectFourPiece(6, 2, Player.RED));
-		shadowPiecesBox.add(new ConnectFourPiece(6, 3, Player.YELLOW));
-		
-		for (ConnectFourPiece piece : shadowPiecesBox) {
-			drawCircle(g2, piece.col, piece.row, piece.player == Player.RED);
-		}
+//		shadowPiecesBox.add(new ConnectFourPiece(6, 0, Player.RED));
+//		shadowPiecesBox.add(new ConnectFourPiece(6, 1, Player.YELLOW));
+//		shadowPiecesBox.add(new ConnectFourPiece(6, 2, Player.RED));
+//		shadowPiecesBox.add(new ConnectFourPiece(6, 3, Player.YELLOW));
+//		
+//		for (ConnectFourPiece piece : shadowPiecesBox) {
+//			drawPiece(g2, piece.col, piece.row, piece.player == Player.RED);
+//		}
 	}
 	
 	private void drawBoard(Graphics2D g2) {
@@ -60,14 +73,27 @@ public class ConnectFourView extends JPanel implements MouseListener {
 		
 		for (int row = 0; row < 6; row++) {
 			for (int col = 0; col < 7; col++) {
-				g2.drawOval(originX + col * cellSize, originY + row * cellSize, diameter, diameter);
+				Rectangle square = squareFor(col, row);
+				g2.drawOval(square.x, square.y, square.width, square.height);
+				
+				// TODO tmp code
+				Rectangle cell = new Rectangle(originX + col * cellSize, originY + (5 - row) * cellSize, cellSize, cellSize);
+				g2.drawRect(cell.x, cell.y, cell.width, cell.height);
+				
 			}
 		}
 	}
 	
-	private void drawCircle(Graphics2D g2, int col, int row, boolean isRed) {
+	private void drawPiece(Graphics2D g2, int col, int row, boolean isRed) {
 		g2.setColor(isRed ? Color.RED : Color.YELLOW);
-		g2.fillOval(originX + col * cellSize, originY + (5 - row) * cellSize, diameter, diameter);
+		Rectangle square = squareFor(col, row);
+		g2.fillOval(square.x, square.y, square.width, square.height);
+	}
+	
+	private Rectangle squareFor(int col, int row) {
+		int x = originX + col * cellSize + (cellSize - diameter)/2;
+		int y = originY + (5- row) * cellSize + (cellSize - diameter)/2;
+		return new Rectangle(x, y, diameter, diameter);
 	}
 
 	@Override
