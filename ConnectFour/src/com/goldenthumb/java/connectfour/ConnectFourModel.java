@@ -33,11 +33,6 @@ public class ConnectFourModel {
 				if (piece == null) {
 					desc += " .";
 				} else {
-//					if (piece.player == Player.RED) {
-//						desc += " r";
-//					} else {
-//						desc += " y";
-//					}
 					desc += piece.player == Player.RED ? " r" : " y";
 				}
 			}
