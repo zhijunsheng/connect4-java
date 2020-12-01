@@ -9,8 +9,6 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.swing.JPanel;
 
@@ -19,8 +17,6 @@ public class ConnectFourView extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 2064075504759682385L;
 	
 	ConnectFourDelegate delegate = null;
-	
-	Set<ConnectFourPiece> shadowPiecesBox = new HashSet<ConnectFourPiece>();
 	
 	private int originX = 90;
 	private int originY = 70;
@@ -52,18 +48,6 @@ public class ConnectFourView extends JPanel implements MouseListener {
 				}
 			}
 		}
-		
-		
-		// tmp code
-		
-//		shadowPiecesBox.add(new ConnectFourPiece(6, 0, Player.RED));
-//		shadowPiecesBox.add(new ConnectFourPiece(6, 1, Player.YELLOW));
-//		shadowPiecesBox.add(new ConnectFourPiece(6, 2, Player.RED));
-//		shadowPiecesBox.add(new ConnectFourPiece(6, 3, Player.YELLOW));
-//		
-//		for (ConnectFourPiece piece : shadowPiecesBox) {
-//			drawPiece(g2, piece.col, piece.row, piece.player == Player.RED);
-//		}
 	}
 	
 	private void drawBoard(Graphics2D g2) {
@@ -98,11 +82,8 @@ public class ConnectFourView extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		Point mouseTip = e.getPoint();
-		System.out.println(mouseTip);
-		
-		int col = (mouseTip.x - originX) / cellSize;
-		System.out.println("col = " + col);
+		int col = (e.getPoint().x - originX) / cellSize;
+		delegate.dropPieceAt(col);
 	}
 
 	@Override

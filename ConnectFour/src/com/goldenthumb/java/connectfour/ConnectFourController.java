@@ -9,20 +9,16 @@ import javax.swing.JFrame;
 public class ConnectFourController implements ConnectFourDelegate {
 	
 	private ConnectFourModel game;
+	private ConnectFourView panel;
 	
 	ConnectFourController() {		
 		game = new ConnectFourModel();
-		System.out.println(game);
-		game.dropPieceAt(5);
-		game.dropPieceAt(5);
-		game.dropPieceAt(4);
-		game.dropPieceAt(1);
 		
 		JFrame frame = new JFrame("Connect Four");
 		frame.setSize(700, 600);
 		frame.setLocation(200, 1200);
 		
-		ConnectFourView panel = new ConnectFourView();
+		panel = new ConnectFourView();
 		panel.delegate = this;
 		frame.add(panel);
 		
@@ -36,6 +32,12 @@ public class ConnectFourController implements ConnectFourDelegate {
 	@Override
 	public ConnectFourPiece pieceAt(int col, int row) {
 		return game.pieceAt(col, row);
+	}
+
+	@Override
+	public void dropPieceAt(int col) {
+		game.dropPieceAt(col);
+		panel.repaint();
 	}
 
 }
