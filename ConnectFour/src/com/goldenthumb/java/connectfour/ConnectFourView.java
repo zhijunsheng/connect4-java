@@ -8,7 +8,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
-public class ConnectFourPanel extends JPanel {
+public class ConnectFourView extends JPanel {
 
 	private static final long serialVersionUID = 2064075504759682385L;
 
