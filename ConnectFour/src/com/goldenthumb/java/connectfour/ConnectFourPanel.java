@@ -18,10 +18,15 @@ public class ConnectFourPanel extends JPanel {
 		
 		Graphics2D g2 = (Graphics2D)g;
 		
-		g2.setColor(Color.MAGENTA);
-		g2.setStroke(new BasicStroke(7));
+		g2.setColor(Color.BLACK);
+		g2.setStroke(new BasicStroke(3));
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		g2.drawOval(100, 70, 150, 150);
+		int cellSize = 80;
+		for (int row = 0; row < 6; row++) {
+			for (int col = 0; col < 7; col++) {
+				g2.drawOval(90 + col * cellSize, 70 + row * cellSize, 50, 50);
+			}
+		}
 	}
 }
