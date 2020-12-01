@@ -6,13 +6,27 @@ import java.util.Set;
 public class ConnectFourModel {
 	
 	private Set<ConnectFourPiece> piecesBox = new HashSet<ConnectFourPiece>();
+	private Player playerInTurn = Player.RED;
 	
 	void dropPieceAt(int col) {
-		ConnectFourPiece newPiece = new ConnectFourPiece(col, 0, Player.YELLOW);
+		int row = numPiecesAt(col);
+		ConnectFourPiece newPiece = new ConnectFourPiece(col, row, playerInTurn);
 		piecesBox.add(newPiece);
+		
+		playerInTurn = playerInTurn == Player.RED ? Player.YELLOW : Player.RED;
 	}
 	
-	private ConnectFourPiece pieceAt(int col, int row) {
+	private int numPiecesAt(int col) {
+		int cnt = 0;
+		for (ConnectFourPiece piece : piecesBox) {
+			if (piece.col == col) {
+				cnt += 1;
+			}
+		}
+		return cnt;
+	}
+	
+	ConnectFourPiece pieceAt(int col, int row) {
 		for (ConnectFourPiece piece : piecesBox) {
 			if (piece.col == col && piece.row == row) {
 				return piece;

@@ -7,12 +7,27 @@ import org.junit.jupiter.api.Test;
 class ConnectFourModelTest {
 	
 	@Test
+	void testDropPieceAt() {
+		ConnectFourModel game = new ConnectFourModel();
+		
+		assertNull(game.pieceAt(0, 3));
+		
+		game.dropPieceAt(0);
+		game.dropPieceAt(0);
+		game.dropPieceAt(0);
+		game.dropPieceAt(0);
+		
+		System.out.println(game);
+		assertEquals(Player.YELLOW, game.pieceAt(0, 3).player);
+	}
+	
+	@Test
 	void testGameBoardWithPieces() {
 		ConnectFourModel game = new ConnectFourModel();
 		game.dropPieceAt(0);
 		game.dropPieceAt(3);
-		
-		System.out.println(game);
+		game.dropPieceAt(6);
+		assertTrue(game.toString().contains("0 r . . y . . r"));
 	}
 
 	@Test
