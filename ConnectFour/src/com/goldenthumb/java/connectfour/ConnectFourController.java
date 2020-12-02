@@ -1,5 +1,10 @@
 package com.goldenthumb.java.connectfour;
 
+import java.io.InputStream;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 
 /*
@@ -24,6 +29,18 @@ public class ConnectFourController implements ConnectFourDelegate {
 		
 		frame.setVisible(true);
 	}
+	
+	private void playSound() {
+		InputStream is = getClass().getClassLoader().getResourceAsStream("drop.wav");
+		try {
+			AudioInputStream ais = AudioSystem.getAudioInputStream(is);
+			Clip clip = AudioSystem.getClip();
+			clip.open(ais);
+			clip.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static void main(String[] args) {
 		new ConnectFourController();
@@ -38,6 +55,7 @@ public class ConnectFourController implements ConnectFourDelegate {
 	public void dropPieceAt(int col) {
 		game.dropPieceAt(col);
 		panel.repaint();
+		playSound();
 	}
 
 }
