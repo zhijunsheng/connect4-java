@@ -18,10 +18,13 @@ public class ConnectFourView extends JPanel implements MouseListener {
 	
 	ConnectFourDelegate delegate = null;
 	
-	private int originX = 90;
-	private int originY = 70;
-	private int cellSize = 80;
-	private int diameter = 50;
+	private double boardScaleFactor = 0.9; 
+	private double circleScaleFactor = 0.8; 
+	
+	private int originX = -10000;
+	private int originY = -10000;
+	private int cellSize = -10000;
+	private int diameter = -10000;
 	
 	ConnectFourView() {
 		super();
@@ -32,6 +35,19 @@ public class ConnectFourView extends JPanel implements MouseListener {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
+		int w = (int)((double)(getSize().width) * boardScaleFactor);
+		int h = (int)((double)(getSize().height) * boardScaleFactor);
+		if (w * 6 > h * 7) {
+			cellSize = h / 6;
+		} else {
+			cellSize = w / 7;
+		}
+		diameter = (int)(circleScaleFactor * ((double)cellSize));
+		
+		originX = (getSize().width - 7 * cellSize) / 2;
+		originY = (getSize().height - 6 * cellSize) / 2;
+		
 		
 		Graphics2D g2 = (Graphics2D)g;
 		
@@ -61,8 +77,8 @@ public class ConnectFourView extends JPanel implements MouseListener {
 				g2.drawOval(square.x, square.y, square.width, square.height);
 				
 				// TODO tmp code
-				Rectangle cell = new Rectangle(originX + col * cellSize, originY + (5 - row) * cellSize, cellSize, cellSize);
-				g2.drawRect(cell.x, cell.y, cell.width, cell.height);
+//				Rectangle cell = new Rectangle(originX + col * cellSize, originY + (5 - row) * cellSize, cellSize, cellSize);
+//				g2.drawRect(cell.x, cell.y, cell.width, cell.height);
 				
 			}
 		}
