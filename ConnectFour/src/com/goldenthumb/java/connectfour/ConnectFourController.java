@@ -1,10 +1,13 @@
 package com.goldenthumb.java.connectfour;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.InputStream;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /*
@@ -20,12 +23,18 @@ public class ConnectFourController implements ConnectFourDelegate {
 		game = new ConnectFourModel();
 		
 		JFrame frame = new JFrame("Connect Four");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLayout(new BorderLayout());
 		frame.setSize(700, 600);
 		frame.setLocation(200, 1200);
 		
 		panel = new ConnectFourView();
 		panel.delegate = this;
-		frame.add(panel);
+		frame.add(panel, BorderLayout.CENTER);
+		
+		JButton resetBtn = new JButton("Reset");
+		resetBtn.setPreferredSize(new Dimension(-1, 40));
+		frame.add(resetBtn, BorderLayout.SOUTH);
 		
 		frame.setVisible(true);
 	}
