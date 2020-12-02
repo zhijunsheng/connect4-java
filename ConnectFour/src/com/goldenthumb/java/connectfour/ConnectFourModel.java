@@ -35,6 +35,11 @@ public class ConnectFourModel {
 		return null;
 	}
 	
+	void reset() {
+		piecesBox.removeAll(piecesBox);
+		playerInTurn = Player.RED;
+	}
+	
 	@Override
 	public String toString() {
 		

@@ -2,6 +2,8 @@ package com.goldenthumb.java.connectfour;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.InputStream;
 
 import javax.sound.sampled.AudioInputStream;
@@ -37,6 +39,15 @@ public class ConnectFourController implements ConnectFourDelegate {
 		frame.add(resetBtn, BorderLayout.SOUTH);
 		
 		frame.setVisible(true);
+		
+		resetBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				game.reset();
+				panel.repaint();
+			}
+		});
 	}
 	
 	private void playSound() {
